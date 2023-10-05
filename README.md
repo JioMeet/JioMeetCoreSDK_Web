@@ -25,7 +25,7 @@ Introducing JioMeet Web SDK, a developer-friendly audio and video SDK designed f
 ## 🏗️ Architecture Diagram
 
 <p align="center" > 
-  <img src="images/logic-diagram-light.png" title="architecture Diagram" float=center height=512>
+  <img src="https://storage.googleapis.com/cpass-sdk/assets/screenshots/Web/CoreSdkWeb-ArchitectureDiagram.png" title="architecture Diagram" float=center height=512>
 </p>
 
 ## 🚀 How to Install SDK
