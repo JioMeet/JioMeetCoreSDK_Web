@@ -8,19 +8,19 @@ Introducing JioMeet Web SDK, a developer-friendly audio and video SDK designed f
 
 ## Table of Contents
 
-- [👋 Introduction](#👋-introduction)
-- [🏗️ Architecture Diagram](#🏗️-architecture-diagram)
-- [🚀 How to Install SDK](#🚀-how-to-install-sdk)
-- [🏁 Setup](#🏁-setup)
-- [🧑‍💻 Quick Start Code](#🧑‍💻-quick-start-code)
-- [⭐️ Fundamental components](#⭐️-fundamental-components)
-- [🏠 JMClient Class](#🏠-jmclient-class)
-- [👑 Host Control](#👑-host-control)
-- [📢 Event Manager](#📢-event-manager)
-- [👀 Preview Manager](#👀-preview-manager)
-- [📸 Device Manager](#📸-device-manager)
-- [❌ Error Handling](#❌-error-handling)
-- [🐞 Logger](#🐞-logger)
+- [👋 Introduction](#-introduction)
+- [🏗️ Architecture Diagram](#-architecture-diagram)
+- [🚀 How to Install SDK](#-how-to-install-sdk)
+- [🏁 Setup](#-setup)
+- [🧑‍💻 Quick Start Code](#-quick-start-code)
+- [🌟 Fundamental Components](#-fundamental-components)
+- [🏠 JMClient Class](#-jmclient-class)
+- [👑 Host Control](#-host-control)
+- [📢 Event Manager](#-event-manager)
+- [👀 Preview Manager](#-preview-manager)
+- [📸 Device Manager](#-device-manager)
+- [❌ Error Handling](#-error-handling)
+- [🐞 Logger](#-logger)
 
 ## 🏗️ Architecture Diagram
 
@@ -166,7 +166,7 @@ async function stopScreenShare() {
 }
 ```
 
-## ⭐️ Fundamental components
+## 🌟 Fundamental Components
 
 - [`JMClient Class`](#🏠-jmclient-class) - This is entry level of the SDk, it provide all the method to managing call.
 - [`Event Manager`](#📢-event-manager) - It gives you events on any changes that occur in the SDK.
