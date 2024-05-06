@@ -1,5 +1,5 @@
 <p align="center" >
-  <img src="https://jiomeetpro.jio.com/assets/img/website/website_logo_header_light.svg" title="logo" float=center  height="160">
+  <img src="https://jiomeetpro.jio.com/assets/img/website/website_logo_header_light.svg" title="logo" float=center  height="200">
 </p>
 
 # 👋 JioMeet Core Web SDK
@@ -8,19 +8,19 @@ Introducing JioMeet Web SDK, a developer-friendly audio and video SDK designed f
 
 ## Table of Contents
 
-- [👋 Introduction](#-introduction)
-- [🏗️ Architecture Diagram](#-architecture-diagram)
-- [🚀 How to Install SDK](#-how-to-install-sdk)
-- [🏁 Setup](#-setup)
-- [🧑‍💻 Quick Start Code](#-quick-start-code)
-- [🌟 Fundamental Components](#-fundamental-components)
-- [🏠 JMClient Class](#-jmclient-class)
-- [👑 Host Control](#-host-control)
-- [📢 Event Manager](#-event-manager)
-- [👀 Preview Manager](#-preview-manager)
-- [📸 Device Manager](#-device-manager)
-- [❌ Error Handling](#-error-handling)
-- [🐞 Logger](#-logger)
+- [👋 Introduction](#👋-introduction)
+- [🏗️ Architecture Diagram](#🏗️-architecture-diagram)
+- [🚀 How to Install SDK](#🚀-how-to-install-sdk)
+- [🏁 Setup](#🏁-setup)
+- [🧑‍💻 Quick Start Code](#🧑‍💻-quick-start-code)
+- [⭐️ Fundamental components](#⭐️-fundamental-components)
+- [🏠 JMClient Class](#🏠-jmclient-class)
+- [👑 Host Control](#👑-host-control)
+- [📢 Event Manager](#📢-event-manager)
+- [👀 Preview Manager](#👀-preview-manager)
+- [📸 Device Manager](#📸-device-manager)
+- [❌ Error Handling](#❌-error-handling)
+- [🐞 Logger](#🐞-logger)
 
 ## 🏗️ Architecture Diagram
 
@@ -55,7 +55,7 @@ Use the [create meeting api](https://dev.jiomeet.com/docs/JioMeet%20Platform%20S
 ## 🧑‍💻 Quick Start Code
 
 ```typescript
-import { EventManager, JMClient } from '@jiomeet/core-sdk-web';
+import { EventManager, JMClient } from "@jiomeet/core-sdk-web";
 
 let isAudioMuted = true;
 let isVideoMuted = true;
@@ -63,110 +63,113 @@ const jmClient = new JMClient();
 
 // It is good practice to register event before calling join meeting
 const unsubscribe = EventManager.onEvent((eventInfo) => {
-	const { data } = eventInfo;
-	switch (eventInfo.type) {
-		case IJMInfoEventTypes.PEER_JOINED:
-			const { remotePeers } = data;
-			remotePeers.forEach((remotePeer: IJMRemotePeer) => {
-				console.log('A new peer has joined the meeting:', remotePeer);
-			});
-			break;
-		case IJMInfoEventTypes.PEER_UPDATED:
-			const { remotePeer, updateInfo } = data;
-			const { action, value } = updateInfo;
-			if (action === 'AUDIO_MUTE' && value === false) {
-				// Subscribe to the remote peer's audio track
-				const audioTrack = await jmClient.subscribeMedia(remotePeer, 'audio');
-				// Play the track on web page
-				audioTrack.play();
-			} else if (action === 'VIDEO_MUTE') {
-				if (value === false) {
-					// Subscribe to the remote peer's video track
-					const videoTrack = await jmClient.subscribeMedia(remotePeer, 'video');
-					// Play the track on web page
-					videoTrack.play('divId');
-				}
-			} else if (action === 'SCREEN_SHARE') {
-				if (value === true) {
-					// Subscribe to the remote peer's screen share track
-					const screenShareTrack = await jmClient.subscribeMedia(remotePeer, 'screenShare');
-					// Play the track on web page
-					screenShareTrack.play('divId');
-				}
-			}
-			break;
-		case IJMInfoEventTypes.PEER_LEFT:
-			const { remotePeers } = data;
-			remotePeers.forEach((remotePeer) => {
-				console.log('A peer has left the meeting:', remotePeer);
-			});
-			break;
-		default:
-			break;
-	}
+  const { data } = eventInfo;
+  switch (eventInfo.type) {
+    case IJMInfoEventTypes.PEER_JOINED:
+      const { remotePeers } = data;
+      remotePeers.forEach((remotePeer: IJMRemotePeer) => {
+        console.log("A new peer has joined the meeting:", remotePeer);
+      });
+      break;
+    case IJMInfoEventTypes.PEER_UPDATED:
+      const { remotePeer, updateInfo } = data;
+      const { action, value } = updateInfo;
+      if (action === "AUDIO_MUTE" && value === false) {
+        // Subscribe to the remote peer's audio track
+        const audioTrack = await jmClient.subscribeMedia(remotePeer, "audio");
+        // Play the track on web page
+        audioTrack.play();
+      } else if (action === "VIDEO_MUTE") {
+        if (value === false) {
+          // Subscribe to the remote peer's video track
+          const videoTrack = await jmClient.subscribeMedia(remotePeer, "video");
+          // Play the track on web page
+          videoTrack.play("divId");
+        }
+      } else if (action === "SCREEN_SHARE") {
+        if (value === true) {
+          // Subscribe to the remote peer's screen share track
+          const screenShareTrack = await jmClient.subscribeMedia(
+            remotePeer,
+            "screenShare"
+          );
+          // Play the track on web page
+          screenShareTrack.play("divId");
+        }
+      }
+      break;
+    case IJMInfoEventTypes.PEER_LEFT:
+      const { remotePeers } = data;
+      remotePeers.forEach((remotePeer) => {
+        console.log("A peer has left the meeting:", remotePeer);
+      });
+      break;
+    default:
+      break;
+  }
 });
 
 // Call the joinMeeting method to start the meeting
 async function joinMeeting() {
-	try {
-		const userId = jmClient.joinMeeting({
-			meetingId: '12345678',
-			meetingPin: 'abcd2',
-			userDisplayName: 'John',
-			config: {
-				userRole: 'speaker',
-			},
-		});
-		console.log('Joined the meeting with user ID:', userId);
-	} catch (error: any) {
-		console.error('Failed to join the meeting:', error);
-	}
+  try {
+    const userId = jmClient.joinMeeting({
+      meetingId: "12345678",
+      meetingPin: "abcd2",
+      userDisplayName: "John",
+      config: {
+        userRole: "speaker",
+      },
+    });
+    console.log("Joined the meeting with user ID:", userId);
+  } catch (error: any) {
+    console.error("Failed to join the meeting:", error);
+  }
 }
 
 // Mute/unMute Local Audio
 async function toggleMuteAudio() {
-	try {
-		isAudioMuted = !isAudioMuted;
-		await JMClient.muteLocalAudio(isAudioMuted);
-		console.log(`Local audio ${isAudioMuted ? 'muted' : 'unmuted'}`);
-	} catch (error) {
-		console.error(error);
-	}
+  try {
+    isAudioMuted = !isAudioMuted;
+    await JMClient.muteLocalAudio(isAudioMuted);
+    console.log(`Local audio ${isAudioMuted ? "muted" : "unmuted"}`);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // Mute/unMute Local Video
 async function toggleMuteVideo() {
-	try {
-		isVideoMuted = !isVideoMuted;
-		await JMClient.muteLocalVideo(isVideoMuted);
-		console.log(`Local video ${isVideoMuted ? 'muted' : 'unmuted'}`);
-	} catch (error) {
-		console.error(error);
-	}
+  try {
+    isVideoMuted = !isVideoMuted;
+    await JMClient.muteLocalVideo(isVideoMuted);
+    console.log(`Local video ${isVideoMuted ? "muted" : "unmuted"}`);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // Starting screen share
 async function startScreenShare() {
-	try {
-		const screenShareTrack = await jmClient.startScreenShare();
-		// Do something with the screenShareTrack object
-	} catch (error) {
-		console.log('Failed to start screen share', error);
-	}
+  try {
+    const screenShareTrack = await jmClient.startScreenShare();
+    // Do something with the screenShareTrack object
+  } catch (error) {
+    console.log("Failed to start screen share", error);
+  }
 }
 
 // Stopping screen share
 async function stopScreenShare() {
-	try {
-		await jmClient.stopScreenShare();
-		// Screen share stopped successfully
-	} catch (error) {
-		console.log('Failed to stop screen share', error);
-	}
+  try {
+    await jmClient.stopScreenShare();
+    // Screen share stopped successfully
+  } catch (error) {
+    console.log("Failed to stop screen share", error);
+  }
 }
 ```
 
-## 🌟 Fundamental Components
+## ⭐️ Fundamental components
 
 - [`JMClient Class`](#🏠-jmclient-class) - This is entry level of the SDk, it provide all the method to managing call.
 - [`Event Manager`](#📢-event-manager) - It gives you events on any changes that occur in the SDK.
@@ -183,40 +186,62 @@ The "JMClient" class is a core class of the SDK that enables communication betwe
 
 ```typescript
 interface IJMClient {
-	remotePeers: IJMRemotePeer[];
-	localPeer: IJMLocalPeer | undefined;
-	roomMediaSetting: IJMMediaSetting;
-	localPeer: IJMLocalPeer | undefined;
-	joinMeeting(meetingData: IJMJoinMeetingParams): Promise<string>;
-	createPreview(id: string): IJMPreviewManager;
-	getPreview(id: string): IJMPreviewManager;
-	setLogLevel(level: number): void;
-	publish(config: IJMMediaSetting): Promise<IJMLocalPeer>;
-	muteLocalAudio(isMute: boolean): Promise<IJMLocalAudioTrack | void>;
-	muteLocalVideo(isMute: boolean): Promise<IJMLocalVideoTrack | void>;
-	startScreenShare(): Promise<IJMLocalScreenShareTrack>;
-	stopScreenShare(): Promise<void>;
-	audioAutoPlayUnblock(): Promise<void>;
-	subscribeMedia(remotePeer: IJMRemotePeer, mediaType: 'audio' | 'video' | 'screenShare'): Promise<IJMRemoteAudioTrack | IJMRemoteVideoTrack | IJMRemoteScreenShareTrack>;
-	unsubscribeMedia(remotePeer: IJMRemotePeer, mediaType: 'audio' | 'video' | 'screenShare'): Promise<void>;
-	setAudioInputDevice(deviceId: string): Promise<void>;
-	setAudioOutputDevice(deviceId: string): Promise<void>;
-	setVideoDevice(deviceId: string): Promise<void>;
-	setBackgroundImage(path: string): Promise<void>;
-	setBackgroundBlurring(value: string): Promise<void>;
-	removeVirtualBackground(): Promise<void>;
-	hardMuteUnmutePeersAudio(isMute: boolean): Promise<void>;
-	toggleMeetingLock(): Promise<void>;
-	softMutePeersAudio(): Promise<void>;
-	raiseHand(isRaised: boolean): Promise<void>;
-	lowerAllUsersHands(): Promise<void>;
-	startRecording(): Promise<void>;
-	stopRecording(): Promise<void>;
-	requestMediaToggle(requestedPeerId: string, requestedMediaType: IJMRequestMediaType): Promise<void>;
-	acceptMediaToggleRequest(requestingPeerId: string, requestedMediaType: IJMRequestMediaType, requestedMuteState: boolean): Promise<void>;
-	rejectMediaToggleRequest(requestingPeerId: string, requestedMediaType: IJMRequestMediaType, requestedMuteState: boolean): Promise<void>;
-	lowerRemotePeerHand(peerId: string): Promise<void>;
-	leaveMeeting(): Promise<void>;
+  remotePeers: IJMRemotePeer[];
+  localPeer: IJMLocalPeer | undefined;
+  roomMediaSetting: IJMMediaSetting;
+  localPeer: IJMLocalPeer | undefined;
+  joinMeeting(meetingData: IJMJoinMeetingParams): Promise<string>;
+  createPreview(id: string): IJMPreviewManager;
+  getPreview(id: string): IJMPreviewManager;
+  setLogLevel(level: number): void;
+  publish(config: IJMMediaSetting): Promise<IJMLocalPeer>;
+  muteLocalAudio(isMute: boolean): Promise<IJMLocalAudioTrack | void>;
+  muteLocalVideo(isMute: boolean): Promise<IJMLocalVideoTrack | void>;
+  startScreenShare(): Promise<IJMLocalScreenShareTrack>;
+  stopScreenShare(): Promise<void>;
+  audioAutoPlayUnblock(): Promise<void>;
+  subscribeMedia(
+    remotePeer: IJMRemotePeer,
+    mediaType: "audio" | "video" | "screenShare"
+  ): Promise<
+    IJMRemoteAudioTrack | IJMRemoteVideoTrack | IJMRemoteScreenShareTrack
+  >;
+  unsubscribeMedia(
+    remotePeer: IJMRemotePeer,
+    mediaType: "audio" | "video" | "screenShare"
+  ): Promise<void>;
+  setAudioInputDevice(deviceId: string): Promise<void>;
+  setAudioOutputDevice(deviceId: string): Promise<void>;
+  setVideoDevice(videoSettings: IJMVideoSettings): Promise<void>;
+  setBackgroundImage(path: string): Promise<void>;
+  setBackgroundBlurring(value: string): Promise<void>;
+  removeVirtualBackground(): Promise<void>;
+  hardMuteUnmutePeersAudio(isMute: boolean): Promise<void>;
+  toggleMeetingLock(): Promise<void>;
+  softMutePeersAudio(): Promise<void>;
+  raiseHand(isRaised: boolean): Promise<void>;
+  lowerAllUsersHands(): Promise<void>;
+  startRecording(): Promise<void>;
+  stopRecording(): Promise<void>;
+  requestMediaToggle(
+    requestedPeerId: string,
+    requestedMediaType: IJMRequestMediaType
+  ): Promise<void>;
+  acceptMediaToggleRequest(
+    requestingPeerId: string,
+    requestedMediaType: IJMRequestMediaType,
+    requestedMuteState: boolean
+  ): Promise<void>;
+  rejectMediaToggleRequest(
+    requestingPeerId: string,
+    requestedMediaType: IJMRequestMediaType,
+    requestedMuteState: boolean
+  ): Promise<void>;
+  lowerRemotePeerHand(peerId: string): Promise<void>;
+  loadChat(payload: IJMLoadChat): Promise<void>;
+  sendChatMessage(sendChatMessageProps: IJMMessageComp): Promise<void>;
+
+  leaveMeeting(): Promise<void>;
 }
 ```
 
@@ -225,7 +250,7 @@ interface IJMClient {
 Begin by importing the JMClient class into your project. After that, you can create an instance of the class to access its methods and functionality.
 
 ```typescript
-import { JMClient } from '@jiomeet/core-sdk-web';
+import { JMClient } from "@jiomeet/core-sdk-web";
 ///create instance of the class
 const jmClient = new JMClient();
 ```
@@ -324,7 +349,7 @@ check [Preview Manger](#👀-preview-manager) section for more details.
 ##### Example:
 
 ```typescript
-const previewManager = await jmClient.createPreview('1');
+const previewManager = await jmClient.createPreview("1");
 ```
 
 #### 👀 Get Preview
@@ -344,7 +369,7 @@ The getPreview method return the preview manager instance which you created usin
 ##### Example:
 
 ```typescript
-const previewManager = await jmClient.getPreview('1');
+const previewManager = await jmClient.getPreview("1");
 ```
 
 #### 🏁 Start Publish Media
@@ -386,17 +411,17 @@ It Is completely optional ,because you can still these method [`muteLocalAudio`]
 ```typescript
 // Example of data format for creating preview
 const previewConfig = {
-	trackSettings: {
-		audioMuted: false,
-		videoMuted: false,
-		audioInputDeviceId: 'abc',
-		videoDeviceId: 'xyz',
-	},
-	virtualBackgroundSettings: {
-		isVirtualBackground: false,
-		sourceType: 'none',
-		sourceValue: '',
-	},
+  trackSettings: {
+    audioMuted: false,
+    videoMuted: false,
+    audioInputDeviceId: "abc",
+    videoDeviceId: "xyz",
+  },
+  virtualBackgroundSettings: {
+    isVirtualBackground: false,
+    sourceType: "none",
+    sourceValue: "",
+  },
 };
 
 await jmClient.publish(previewConfig);
@@ -469,7 +494,7 @@ Successfully call subscribeMedia return track based on mediaType [`IJMRemoteVide
 
 ```typescript
 const remotePeer = jmClient.remotePeers[0];
-const remoteAudioTrack = await jmClient.subscribeMedia(remotePeer, 'audio');
+const remoteAudioTrack = await jmClient.subscribeMedia(remotePeer, "audio");
 ```
 
 #### 🙅 Unsubscribe Media
@@ -491,7 +516,7 @@ Unsubscribes to the audio, video and screenShare tracks of a remote peer.
 
 ```typescript
 const remotePeer = jmClient.remotePeers[0];
-await jmClient.unsubscribeMedia(remotePeer, 'audio');
+await jmClient.unsubscribeMedia(remotePeer, "audio");
 ```
 
 #### ⬜️ Start Whiteboard
@@ -580,7 +605,7 @@ You can use these methods to set a custom image as the virtual background on you
 ##### Example:
 
 ```typescript
-await jmClient.setBackgroundImage('https://image.jpg');
+await jmClient.setBackgroundImage("https://image.jpg");
 ```
 
 #### 🌫 Set Background Blur
@@ -599,7 +624,7 @@ You can use these methods to blur the background of your local video track. When
 ##### Example:
 
 ```typescript
-await jmClient.setBackgroundBlurring('5');
+await jmClient.setBackgroundBlurring("5");
 ```
 
 #### 👨‍💼 Remove Virtual Background
@@ -618,21 +643,24 @@ await jmClient.removeVirtualBackground();
 
 #### 🎥 Set Video Device
 
-<code>setVideoDevice(deviceId:string): Promise&lt;void&gt;</code>
+<code>setVideoDevice(videoSettings: IJMVideoSettings): Promise&lt;void&gt;</code>
 
 These methods is used to manually set camera device
 
 ##### Parameters:
 
-- **deviceId** : `string`  
-  deviceId of the camera
+- **videoSettings** : [`IJMVideoSettings`](#ijmvideosettings)  
+  device id and facing mode of the camera.
 
 ##### Returns: `Promise<void>`
 
 ##### Example:
 
 ```typescript
-await jmClient.setVideoDevice('abc');
+await jmClient.setVideoDevice({
+  deviceId: "abc",
+  facingMode: IFacingMode.LEFT,
+});
 ```
 
 #### 🎤 Set Audio Input Device
@@ -651,7 +679,7 @@ These methods is used to manually set microphone device
 ##### Example:
 
 ```typescript
-await jmClient.setAudioInputDevice('abc');
+await jmClient.setAudioInputDevice("abc");
 ```
 
 #### 🔊 Set Audio Output Device
@@ -670,7 +698,58 @@ These methods is used to manually set audio output device (speaker)
 ##### Example:
 
 ```typescript
-await jmClient.setAudioOutputDevice('abc');
+await jmClient.setAudioOutputDevice("abc");
+```
+
+#### ✉️ Load Chat
+
+<code>loadChat(payload:<a href="#ijmloadchat"> IJMLoadChat </a>): Promise&lt;void&gt;</code>
+
+This method is used to load latest chat messages.
+
+##### Returns: `Promise<void>`
+
+##### Example:
+
+```typescript
+const payload_GroupChat = {
+  isGroupChat: true,
+};
+const payload_PrivateChat = {
+  isGroupChat: false,
+  peerId: "gu-66df9145-dd97-492e-99a4-85ede620a46a",
+};
+
+await jmClient.loadChat(payload_GroupChat);
+await jmClient.loadChat(payload_PrivateChat);
+```
+
+#### 📤 Send Chat Message
+
+<code>sendChatMessage(
+sendChatMessageProps:<a href="#ijmmessagecomp"> IJMMessageComp </a>
+): Promise&lt;void&gt;</code>
+
+This method is used to send chat message in a private or group chat.
+
+##### Returns: `Promise<void>`
+
+##### Example:
+
+```typescript
+const groupMessage = {
+  text: "hello",
+  isGroupChat: true,
+};
+
+const privateMessage = {
+  text: "hello",
+  isGroupChat: false,
+  peerId: "gu-66df9145-dd97-492e-99a4-85ede620a46a",
+};
+
+await jmClient.sendChatMessage(groupMessage);
+await jmClient.sendChatMessage(privateMessage);
 ```
 
 #### 👋 Leave The Meeting
@@ -783,7 +862,7 @@ This function accepts a parameter called `peerId`. It will lowers the hand of th
 ##### Example:
 
 ```typescript
-await jmClient.lowerRemotePeerHand('123141');
+await jmClient.lowerRemotePeerHand("123141");
 ```
 
 #### 🗳 Request media toggle
@@ -807,7 +886,7 @@ After sending the request, the remote peer responds using either `acceptMediaTog
 ##### Example:
 
 ```typescript
-await jmClient.requestMediaToggle('123141', 'audio');
+await jmClient.requestMediaToggle("123141", "audio");
 ```
 
 #### ✅ Accept media toggle
@@ -832,7 +911,7 @@ Once you accept with this function your media state is change
 ##### Example:
 
 ```typescript
-await jmClient.acceptMediaToggleRequest('123431', 'audio', true);
+await jmClient.acceptMediaToggleRequest("123431", "audio", true);
 ```
 
 #### ❌ Reject media toggle
@@ -855,7 +934,7 @@ This function Handles the rejection of a toggle request initiated by another pee
 ##### Example:
 
 ```typescript
-await jmClient.rejectMediaToggleRequest('123431', 'audio', true);
+await jmClient.rejectMediaToggleRequest("123431", "audio", true);
 ```
 
 ## 📢 Event Manager
@@ -869,25 +948,25 @@ Here's an example of how to register for events:
 ##### 🤔 How to register
 
 ```typescript
-import { EventManager, IJMInfoEventTypes } from '@jiomeet/core-sdk-web';
+import { EventManager, IJMInfoEventTypes } from "@jiomeet/core-sdk-web";
 
 const unsubscribe = EventManager.onEvent((eventInfo) => {
-	switch (eventInfo.type) {
-		case IJMInfoEventTypes.PEER_JOINED:
-			// Handle peer joined event
-			break;
-		default:
-			break;
-	}
+  switch (eventInfo.type) {
+    case IJMInfoEventTypes.PEER_JOINED:
+      // Handle peer joined event
+      break;
+    default:
+      break;
+  }
 });
 
 //Or you can also subscribe specific Event like these
 
 const unsubscribe = EventManager.onEvent(
-	(eventInfo) => {
-		// This will only trigger on "PEER_JOINED" event
-	},
-	[IJMInfoEventTypes.PEER_JOINED]
+  (eventInfo) => {
+    // This will only trigger on "PEER_JOINED" event
+  },
+  [IJMInfoEventTypes.PEER_JOINED]
 );
 ```
 
@@ -1045,6 +1124,20 @@ you can import [`IJMInfoEventTypes`](#ijminfoeventtypes) enum to refer the event
       Whether device added or removed
     - **device** : `MediaDeviceInfo`:  
       Device information of the media input device
+
+- #### CHAT_MESSAGE
+
+  These Events come when any meeting participant sends a message in chat ,it has event info of type [`IJMChatMessageEvent`](#ijmchatmessageevent).
+
+  ##### Interface : [`IJMChatMessageEvent`](#ijmchatmessageevent)
+
+  - **id** : `number`.  
+    Id is unique id of every event.
+  - **type** : [`IJMInfoEventTypes`](#ijminfoeventtypes)  
+    Type refer to type of event ex. `"CHAT_MESSAGE"`, in these case.
+  - **data**
+    - **messages** : [`IJMMessage[]`](#ijmmessage)  
+      Array of chat messages
 
 ### 🛤 Tracks Concept
 
@@ -1238,18 +1331,18 @@ The preview manager offers developers a set of methods that can be used to desig
 
 ```typescript
 interface IJMPreviewManager {
-	previewMediaSetting: IJMMediaSetting;
-	createPreview(config: IJMMediaSetting): Promise<void>;
-	muteLocalAudio(isMute: boolean): Promise<void>;
-	muteLocalVideo(isMute: boolean): Promise<void>;
-	setBackgroundImage(path: string): Promise<void>;
-	setBackgroundBlurring(value: string): Promise<void>;
-	removeVirtualBackground(): Promise<void>;
-	setAudioInputDevice(deviceId: string): Promise<void>;
-	setAudioOutputDevice(deviceId: string): Promise<void>;
-	setVideoDevice(deviceId: string): Promise<void>;
-	play(element: string | HTMLElement, config?: IJMVideoPlayerConfig): void;
-	stopPreview(): Promise<void>;
+  previewMediaSetting: IJMMediaSetting;
+  createPreview(config: IJMMediaSetting): Promise<void>;
+  muteLocalAudio(isMute: boolean): Promise<void>;
+  muteLocalVideo(isMute: boolean): Promise<void>;
+  setBackgroundImage(path: string): Promise<void>;
+  setBackgroundBlurring(value: string): Promise<void>;
+  removeVirtualBackground(): Promise<void>;
+  setAudioInputDevice(deviceId: string): Promise<void>;
+  setAudioOutputDevice(deviceId: string): Promise<void>;
+  setVideoDevice(videoSettings: IJMVideoSettings): Promise<void>;
+  play(element: string | HTMLElement, config?: IJMVideoPlayerConfig): void;
+  stopPreview(): Promise<void>;
 }
 ```
 
@@ -1376,7 +1469,7 @@ This method play the preview video track on web
 ##### Example:
 
 ```typescript
-previewManager.play('divId', { mirror: true, fit: 'cover' });
+previewManager.play("divId", { mirror: true, fit: "cover" });
 ```
 
 #### 🌅 Set Background Image On Preview
@@ -1395,7 +1488,7 @@ You can use these methods to set a custom image as the virtual background on you
 ##### Example:
 
 ```typescript
-await previewManager.setBackgroundImage('https://image.jpg');
+await previewManager.setBackgroundImage("https://image.jpg");
 ```
 
 #### 🌫 Set Background Blur On Preview
@@ -1414,7 +1507,7 @@ You can use these methods to blur the background of your preview video.
 ##### Example:
 
 ```typescript
-await previewManager.setBackgroundBlurring('5');
+await previewManager.setBackgroundBlurring("5");
 ```
 
 #### 👨‍💼 Remove Virtual Background
@@ -1447,21 +1540,24 @@ await previewManager.stopPreview();
 
 #### 🎥 Set Video Device On Preview
 
-<code>setVideoDevice(deviceId:string): Promise&lt;void&gt;</code>
+<code>setVideoDevice(videoSettings: IJMVideoSettings): Promise&lt;void&gt;</code>
 
 These methods is used to manually set camera device for preview
 
 ##### Parameters:
 
-- **deviceId** : `string`  
-  deviceId of the camera
+- **videoSettings** : [`IJMVideoSettings`](#ijmvideosettings)  
+  device id and facing mode of the camera.
 
 ##### Returns: `Promise<void>`
 
 ##### Example:
 
 ```typescript
-await previewManager.setVideoDevice('abc');
+await previewManager.setVideoDevice({
+  deviceId: "abc",
+  facingMode: IFacingMode.LEFT,
+});
 ```
 
 #### 🎤 Set Audio Input Device On Preview
@@ -1480,7 +1576,7 @@ These methods is used to manually set microphone device for preview
 ##### Example:
 
 ```typescript
-await previewManager.setAudioInputDevice('abc');
+await previewManager.setAudioInputDevice("abc");
 ```
 
 #### 🔊 Set Audio Output Device On Preview
@@ -1499,7 +1595,7 @@ These methods is used to manually set audio output device (speaker) for preview
 ##### Example:
 
 ```typescript
-await previewManager.setAudioOutputDevice('abc');
+await previewManager.setAudioOutputDevice("abc");
 ```
 
 ## 📸 Device Manager
@@ -1510,10 +1606,10 @@ With the help of device manager object you can fetch device list and also ask fo
 
 ```typescript
 interface IJMDeviceManager {
-	hasWebcamPermission: boolean;
-	hasMicrophonePermission: boolean;
-	getMediaPermissions(audio: boolean, video: boolean): Promise<void>;
-	getDevices(): Promise<IJMDeviceMap>;
+  hasWebcamPermission: boolean;
+  hasMicrophonePermission: boolean;
+  getMediaPermissions(audio: boolean, video: boolean): Promise<void>;
+  getDevices(): Promise<IJMDeviceMap>;
 }
 ```
 
@@ -1587,28 +1683,28 @@ Here's an example of how to register for global error events:
 ##### 🤔 How to register
 
 ```typescript
-import { EventManager, IJMErrorTypes } from '@jiomeet/core-sdk-web';
+import { EventManager, IJMErrorTypes } from "@jiomeet/core-sdk-web";
 
 const unsubscribe = EventManager.onError((errorInfo) => {
-	switch (errorInfo.type) {
-		case IJMErrorTypes.MEDIA:
-			// Handle Media error
-			break;
-		case IJMErrorTypes.NETWORK:
-			// Handle Media error
-			break;
-		default:
-			break;
-	}
+  switch (errorInfo.type) {
+    case IJMErrorTypes.MEDIA:
+      // Handle Media error
+      break;
+    case IJMErrorTypes.NETWORK:
+      // Handle Media error
+      break;
+    default:
+      break;
+  }
 });
 
 //Or you can also subscribe specific Event like these
 
 const unsubscribe = EventManager.onError(
-	(errorInfo) => {
-		// This will only trigger on "MEDIA" error come
-	},
-	[IJMErrorTypes.MEDIA]
+  (errorInfo) => {
+    // This will only trigger on "MEDIA" error come
+  },
+  [IJMErrorTypes.MEDIA]
 );
 ```
 
@@ -1683,7 +1779,7 @@ Developers can select a log level to view relevant logs and facilitate debugging
 ##### Example:
 
 ```typescript
-import { Logger } from '@jiomeet/core-sdk-web';
+import { Logger } from "@jiomeet/core-sdk-web";
 
 //level = 1 , give all log
 await Logger.setLogLevel(1);
@@ -1708,10 +1804,10 @@ The setLogCallback method sets a callback function that is called when a log mes
 ##### Example:
 
 ```typescript
-import { Logger } from '@jiomeet/core-sdk-web';
+import { Logger } from "@jiomeet/core-sdk-web";
 
 Logger.setLogCallback((level, tag, ...data) => {
-	console.log('LoggerCallback', level, tag, data);
+  console.log("LoggerCallback", level, tag, data);
 });
 ```
 
@@ -1721,17 +1817,17 @@ Logger.setLogCallback((level, tag, ...data) => {
 
 ```typescript
 interface IJMRemotePeer {
-	peerId: string;
-	name: string;
-	joinedAt?: string;
-	metadata?: string;
-	audioMuted: boolean;
-	videoMuted: boolean;
-	screenShare: boolean;
-	isHost: boolean;
-	audioTrack?: IJMRemoteAudioTrack;
-	videoTrack?: IJMRemoteVideoTrack;
-	screenShareTrack?: IJMRemoteScreenShareTrack;
+  peerId: string;
+  name: string;
+  joinedAt?: string;
+  metadata?: string;
+  audioMuted: boolean;
+  videoMuted: boolean;
+  screenShare: boolean;
+  isHost: boolean;
+  audioTrack?: IJMRemoteAudioTrack;
+  videoTrack?: IJMRemoteVideoTrack;
+  screenShareTrack?: IJMRemoteScreenShareTrack;
 }
 ```
 
@@ -1739,8 +1835,8 @@ interface IJMRemotePeer {
 
 ```typescript
 interface IJMRemoteTrack {
-	trackId: string;
-	mediaType: IJMMediaType;
+  trackId: string;
+  mediaType: IJMMediaType;
 }
 ```
 
@@ -1748,7 +1844,7 @@ interface IJMRemoteTrack {
 
 ```typescript
 interface IJMRemoteAudioTrack extends IJMRemoteTrack {
-	play(): void;
+  play(): void;
 }
 ```
 
@@ -1756,7 +1852,7 @@ interface IJMRemoteAudioTrack extends IJMRemoteTrack {
 
 ```typescript
 interface IJMRemoteVideoTrack extends IJMRemoteTrack {
-	play(element: string | HTMLElement, config?: IJMVideoPlayerConfig): void;
+  play(element: string | HTMLElement, config?: IJMVideoPlayerConfig): void;
 }
 ```
 
@@ -1764,7 +1860,113 @@ interface IJMRemoteVideoTrack extends IJMRemoteTrack {
 
 ```typescript
 interface IJMRemoteScreenShareTrack extends IJMRemoteTrack {
-	play(element: string | HTMLElement, config?: IJMVideoPlayerConfig): void;
+  play(element: string | HTMLElement, config?: IJMVideoPlayerConfig): void;
+}
+```
+
+#### `IJMMessage`
+
+```typescript
+interface IJMMessage {
+  id: string;
+  senderPeerId?: string;
+  senderName: string;
+  recipientPeerIds?: string[];
+  time: Date;
+  read: boolean;
+  isGroupChat: boolean;
+  recipientPeerId?: string;
+  type: "TEXT" | "IMAGE";
+  message: IJMMessageComp;
+}
+```
+
+#### `IJMNetworkMessageComponent`
+
+```typescript
+interface IJMNetworkMessageComponent {
+  _id: string;
+  createdBy: any;
+  threadId: string;
+  creatorsName: any;
+  recipients: any;
+  cOn: any;
+  messageComponent: IJMMessageComp;
+}
+```
+
+#### `IJMMessageInput`
+
+```typescript
+interface IJMMessageInput {
+  recipientPeerIds?: string[];
+  type: "TEXT" | "IMAGE";
+  message: IJMMessageComp;
+}
+```
+
+#### `IJMGetPrivateChatThread`
+
+```typescript
+interface IJMGetPrivateChatThread {
+  admins: string[];
+  context: string;
+  members: string[];
+}
+```
+
+#### `IJMMessageComp`
+
+```typescript
+interface IJMMessageComp {
+  text: string;
+  isGroupChat: boolean;
+  attachments: IJMSendChatMessageAttachment[];
+  peerId?: string;
+}
+```
+
+#### `IJMLoadChat`
+
+```typescript
+interface IJMLoadChat {
+  isGroupChat?: boolean;
+  peerId?: string;
+  limit?: number;
+  offset?: number;
+}
+```
+
+#### `IJMChatPayloadConfig`
+
+```typescript
+interface IJMChatPayloadConfig {
+  isGroupChat?: boolean;
+  members: string[];
+  context: string;
+  admins: string[];
+  limit?: number;
+  offset?: number;
+}
+```
+
+#### `IJMSendChatMessageAttachment`
+
+```typescript
+interface IJMSendChatMessageAttachment {
+  fileID: string;
+  fileSize: string;
+  fileName: string;
+  documentUrl: string;
+}
+```
+
+#### `IJMChatMessageEvent`
+
+```typescript
+interface IJMChatMessageEvent extends IJMBaseEvent {
+  type: "CHAT_MESSAGE";
+  data: { messages: IJMMessage[] };
 }
 ```
 
@@ -1772,17 +1974,17 @@ interface IJMRemoteScreenShareTrack extends IJMRemoteTrack {
 
 ```typescript
 interface IJMLocalPeer {
-	peerId: string;
-	name: string;
-	joinedAt?: string;
-	metadata?: string;
-	audioMuted: boolean;
-	videoMuted: boolean;
-	screenShare: boolean;
-	isHost: boolean;
-	audioTrack?: IJMLocalAudioTrack;
-	videoTrack?: IJMLocalVideoTrack;
-	screenShareTrack?: IJMLocalScreenShareTrack;
+  peerId: string;
+  name: string;
+  joinedAt?: string;
+  metadata?: string;
+  audioMuted: boolean;
+  videoMuted: boolean;
+  screenShare: boolean;
+  isHost: boolean;
+  audioTrack?: IJMLocalAudioTrack;
+  videoTrack?: IJMLocalVideoTrack;
+  screenShareTrack?: IJMLocalScreenShareTrack;
 }
 ```
 
@@ -1790,10 +1992,10 @@ interface IJMLocalPeer {
 
 ```typescript
 interface IJMLocalTrack {
-	trackId: string;
-	mediaType: IJMMediaType;
-	on(eventName: string, listener: (...args: any[]) => void): this;
-	trackId: string;
+  trackId: string;
+  mediaType: IJMMediaType;
+  on(eventName: string, listener: (...args: any[]) => void): this;
+  trackId: string;
 }
 ```
 
@@ -1801,7 +2003,7 @@ interface IJMLocalTrack {
 
 ```typescript
 interface IJMLocalAudioTrack extends IJMLocalTrack {
-	play(): void;
+  play(): void;
 }
 ```
 
@@ -1809,7 +2011,7 @@ interface IJMLocalAudioTrack extends IJMLocalTrack {
 
 ```typescript
 interface IJMLocalVideoTrack extends IJMLocalTrack {
-	play(element: string | HTMLElement, config?: IJMVideoPlayerConfig): void;
+  play(element: string | HTMLElement, config?: IJMVideoPlayerConfig): void;
 }
 ```
 
@@ -1817,7 +2019,7 @@ interface IJMLocalVideoTrack extends IJMLocalTrack {
 
 ```typescript
 interface IJMLocalScreenShareTrack extends IJMLocalTrack {
-	play(element: string | HTMLElement, config?: IJMVideoPlayerConfig): void;
+  play(element: string | HTMLElement, config?: IJMVideoPlayerConfig): void;
 }
 ```
 
@@ -1825,48 +2027,64 @@ interface IJMLocalScreenShareTrack extends IJMLocalTrack {
 
 ```typescript
 interface IJMVideoPlayerConfig {
-	mirror?: boolean;
-	fit?: 'cover' | 'contain' | 'fill';
+  mirror?: boolean;
+  fit?: "cover" | "contain" | "fill";
 }
 ```
 
 #### `IJMMediaType`
 
 ```typescript
-type IJMMediaType = 'audio' | 'video' | 'screenShare';
+type IJMMediaType = "audio" | "video" | "screenShare";
 ```
 
 #### `IJMConnectionState`
 
 ```typescript
-type IJMConnectionState = 'DISCONNECTED' | 'CONNECTING' | 'RECONNECTING' | 'CONNECTED' | 'DISCONNECTING';
+type IJMConnectionState =
+  | "DISCONNECTED"
+  | "CONNECTING"
+  | "RECONNECTING"
+  | "CONNECTED"
+  | "DISCONNECTING";
 ```
 
 #### `IJMPeerUpdateActions`
 
 ```typescript
-type IJMPeerUpdateActions = 'AUDIO_MUTE' | 'VIDEO_MUTE' | 'HAND_RAISE' | 'SCREEN_SHARE' | 'DISCONNECTED';
+type IJMPeerUpdateActions =
+  | "AUDIO_MUTE"
+  | "VIDEO_MUTE"
+  | "HAND_RAISE"
+  | "SCREEN_SHARE"
+  | "DISCONNECTED";
 ```
 
 #### `IJMInfoEventTypes`
 
 ```typescript
-type IJMInfoEventTypes = 'PEER_JOINED' | 'PEER_LEFT' | 'PEER_UPDATED' | 'ERROR' | 'DEVICE_UPDATED' | 'CONNECTION_STATE';
+type IJMInfoEventTypes =
+  | "PEER_JOINED"
+  | "PEER_LEFT"
+  | "PEER_UPDATED"
+  | "ERROR"
+  | "DEVICE_UPDATED"
+  | "CONNECTION_STATE";
 ```
 
 #### `IJMRoomUpdateActions`
 
 ```typescript
-type IJMRoomUpdateActions = 'HARD_MUTE' | 'SOFT_MUTE' | 'LOWER_ALL_HAND';
+type IJMRoomUpdateActions = "HARD_MUTE" | "SOFT_MUTE" | "LOWER_ALL_HAND";
 ```
 
 #### `IJMPeerJoinEvent`
 
 ```typescript
 interface IJMPeerJoinEvent {
-	id: number;
-	type: 'PEER_JOINED';
-	data: { remotePeers: IJMRemotePeer[] };
+  id: number;
+  type: "PEER_JOINED";
+  data: { remotePeers: IJMRemotePeer[] };
 }
 ```
 
@@ -1874,9 +2092,9 @@ interface IJMPeerJoinEvent {
 
 ```typescript
 interface IJMPeerLeftEvent {
-	id: number;
-	type: 'PEER_LEFT';
-	data: { remotePeers: IJMRemotePeer[] };
+  id: number;
+  type: "PEER_LEFT";
+  data: { remotePeers: IJMRemotePeer[] };
 }
 ```
 
@@ -1884,15 +2102,15 @@ interface IJMPeerLeftEvent {
 
 ```typescript
 interface IJMPeerUpdateEvent {
-	id: number;
-	type: 'PEER_UPDATED';
-	data: {
-		remotePeer: IJMRemotePeer;
-		updateInfo: {
-			action: IJMPeerUpdateActions;
-			value: boolean;
-		};
-	};
+  id: number;
+  type: "PEER_UPDATED";
+  data: {
+    remotePeer: IJMRemotePeer;
+    updateInfo: {
+      action: IJMPeerUpdateActions;
+      value: boolean;
+    };
+  };
 }
 ```
 
@@ -1900,15 +2118,15 @@ interface IJMPeerUpdateEvent {
 
 ```typescript
 interface IJMRoomUpdateEvent {
-	id: number;
-	type: 'ROOM_UPDATED';
-	data: {
-		remotePeer: IJMRemotePeer;
-		updateInfo: {
-			action: IJMRoomUpdateActions;
-			value: boolean;
-		};
-	};
+  id: number;
+  type: "ROOM_UPDATED";
+  data: {
+    remotePeer: IJMRemotePeer;
+    updateInfo: {
+      action: IJMRoomUpdateActions;
+      value: boolean;
+    };
+  };
 }
 ```
 
@@ -1916,12 +2134,12 @@ interface IJMRoomUpdateEvent {
 
 ```typescript
 interface IJMConnectionStateEvent {
-	id: number;
-	type: 'PEER_UPDATED';
-	data: {
-		currentState: IJMConnectionState;
-		previousState: IJMConnectionState;
-	};
+  id: number;
+  type: "PEER_UPDATED";
+  data: {
+    currentState: IJMConnectionState;
+    previousState: IJMConnectionState;
+  };
 }
 ```
 
@@ -1929,9 +2147,9 @@ interface IJMConnectionStateEvent {
 
 ```typescript
 interface IJMDominantSpeakerEvent {
-	id: number;
-	type: 'DOMINANT_SPEAKER';
-	data: { remotePeer: IJMRemotePeer };
+  id: number;
+  type: "DOMINANT_SPEAKER";
+  data: { remotePeer: IJMRemotePeer };
 }
 ```
 
@@ -1939,12 +2157,12 @@ interface IJMDominantSpeakerEvent {
 
 ```typescript
 interface IJMNetworkQualityEvent {
-	id: number;
-	type: 'NETWORK_QUALITY';
-	data: {
-		downlinkNetworkQuality: number;
-		uplinkNetworkQuality: number;
-	};
+  id: number;
+  type: "NETWORK_QUALITY";
+  data: {
+    downlinkNetworkQuality: number;
+    uplinkNetworkQuality: number;
+  };
 }
 ```
 
@@ -1952,25 +2170,25 @@ interface IJMNetworkQualityEvent {
 
 ```typescript
 interface IJMErrorEvent {
-	id: number;
-	type: IJMErrorTypes;
-	data: IJMException;
+  id: number;
+  type: IJMErrorTypes;
+  data: IJMException;
 }
 ```
 
 #### `IJMErrorTypes`
 
 ```typescript
-type IJMErrorTypes = 'MEDIA' | 'NETWORK' | 'SOCKET' | 'UNKNOWN';
+type IJMErrorTypes = "MEDIA" | "NETWORK" | "SOCKET" | "UNKNOWN";
 ```
 
 #### `IJMErrorEvent`
 
 ```typescript
 interface IJMDeviceUpdateEvent {
-	id: number;
-	type: 'DEVICE_UPDATED';
-	data: IJMDeviceUpdated;
+  id: number;
+  type: "DEVICE_UPDATED";
+  data: IJMDeviceUpdated;
 }
 ```
 
@@ -1978,18 +2196,18 @@ interface IJMDeviceUpdateEvent {
 
 ```typescript
 interface IJMMediaSetting {
-	trackSettings: {
-		audioMuted: boolean;
-		videoMuted: boolean;
-		audioInputDeviceId?: string;
-		audioOutputDeviceId?: string;
-		videoDeviceId?: string;
-	};
-	virtualBackgroundSettings: {
-		isVirtualBackground: boolean;
-		sourceType: 'blur' | 'image' | 'none';
-		sourceValue: string;
-	};
+  trackSettings: {
+    audioMuted: boolean;
+    videoMuted: boolean;
+    audioInputDeviceId?: string;
+    audioOutputDeviceId?: string;
+    videoDeviceId?: string;
+  };
+  virtualBackgroundSettings: {
+    isVirtualBackground: boolean;
+    sourceType: "blur" | "image" | "none";
+    sourceValue: string;
+  };
 }
 ```
 
@@ -1997,13 +2215,13 @@ interface IJMMediaSetting {
 
 ```typescript
 interface IJMJoinMeetingParams {
-	meetingId: string;
-	meetingPin: string;
-	userDisplayName: string;
-	config: {
-		userRole: 'host' | 'audience' | 'speaker';
-		token?: string;
-	};
+  meetingId: string;
+  meetingPin: string;
+  userDisplayName: string;
+  config: {
+    userRole: "host" | "audience" | "speaker";
+    token?: string;
+  };
 }
 ```
 
@@ -2011,14 +2229,34 @@ interface IJMJoinMeetingParams {
 
 ```typescript
 interface IJMDeviceMap {
-	audioInput: MediaDeviceInfo[];
-	audioOutput: MediaDeviceInfo[];
-	videoInput: MediaDeviceInfo[];
+  audioInput: MediaDeviceInfo[];
+  audioOutput: MediaDeviceInfo[];
+  videoInput: MediaDeviceInfo[];
 }
 ```
 
 #### `IJMRequestMediaType`
 
 ```typescript
-type IJMRequestMediaType = 'audio' | 'video';
+type IJMRequestMediaType = "audio" | "video";
+```
+
+#### `IJMVideoSettings`
+
+```typescript
+interface IJMVideoSettings {
+  deviceId?: string;
+  facingMode?: IFacingMode;
+}
+```
+
+#### `IFacingMode`
+
+```typescript
+enum IFacingMode {
+  USER = "user",
+  ENVIRONMENT = "environment",
+  LEFT = "left",
+  RIGHT = "right",
+}
 ```
