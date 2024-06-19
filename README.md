@@ -240,7 +240,11 @@ interface IJMClient {
   lowerRemotePeerHand(peerId: string): Promise<void>;
   loadChat(payload: IJMLoadChat): Promise<void>;
   sendChatMessage(sendChatMessageProps: IJMMessageComp): Promise<void>;
-
+  acceptWaitingRoomPeer(peerId: string): Promise<void>;
+  rejectWaitingRoomPeer(peerId: string): Promise<void>;
+  acceptAllWaitingRoomPeer(): Promise<void>;
+  rejectAllWaitingRoomPeer(): Promise<void>;
+  leaveWaitingRoom(): Promise<void>;
   leaveMeeting(): Promise<void>;
 }
 ```
@@ -937,6 +941,76 @@ This function Handles the rejection of a toggle request initiated by another pee
 await jmClient.rejectMediaToggleRequest("123431", "audio", true);
 ```
 
+#### ✅ Accept Waitingroom Peer
+
+<code>acceptWaitingRoomPeer(peerId: string): Promise&lt;void&gt;</code>
+
+This method is used to accept the peer in the waiting room.
+
+##### Returns: `Promise<void>`
+
+##### Example:
+
+```typescript
+await jmClient.acceptWaitingRoomPeer("123");
+```
+
+#### ❌ Reject Waitingroom Peer
+
+<code>rejectWaitingRoomPeer(peerId: string): Promise&lt;void&gt;</code>
+
+This method is used to reject the peer in the waiting room.
+
+##### Returns: `Promise<void>`
+
+##### Example:
+
+```typescript
+await jmClient.rejectWaitingRoomPeer("123");
+```
+
+#### ✅ Accept All Waitingroom Peer
+
+<code>acceptAllWaitingRoomPeer(): Promise&lt;void&gt;</code>
+
+This method is used to accept all the peers in the waiting room.
+
+##### Returns: `Promise<void>`
+
+##### Example:
+
+```typescript
+await jmClient.acceptAllWaitingRoomPeer();
+```
+
+#### ❌ Reject All Waitingroom Peer
+
+<code>rejectAllWaitingRoomPeer(): Promise&lt;void&gt;</code>
+
+This method is used to reject all the peers in the waiting room.
+
+##### Returns: `Promise<void>`
+
+##### Example:
+
+```typescript
+await jmClient.rejectAllWaitingRoomPeer();
+```
+
+#### 👋 Leave Waiting Room
+
+<code>leaveWaitingRoom(): Promise&lt;void&gt;</code>
+
+This method is used to leave the waiting room.
+
+##### Returns: `Promise<void>`
+
+##### Example:
+
+```typescript
+await jmClient.leaveWaitingRoom();
+```
+
 ## 📢 Event Manager
 
 Our SDK provides events to the client about any change or update happen in the sdk after user register for the events. These events can include things like peers joining or leaving the call, audio or video status being updated, and other similar events.
@@ -1138,6 +1212,19 @@ you can import [`IJMInfoEventTypes`](#ijminfoeventtypes) enum to refer the event
   - **data**
     - **messages** : [`IJMMessage[]`](#ijmmessage)  
       Array of chat messages
+
+- #### WAITING_ROOM
+
+  These Events come when a peer joins ,leaves ,gets accepted or rejected inside waiting room [`IJMWaitingRoomEvent`](#ijmwaitingroomevent).
+
+  ##### Interface : [`IJMWaitingRoomEvent`](#ijmwaitingroomevent)
+
+  - **id** : `number`.  
+    Id is unique id of every event.
+  - **type** : [`IJMInfoEventTypes`](#ijminfoeventtypes)  
+    Type refer to type of event ex. `"WAITING_ROOM"`, in these case.
+  - **data**
+    - **updateInfo** : [`IWaitingRoomUpdateInfo`](#iwaitingroomupdateinfo)
 
 ### 🛤 Tracks Concept
 
@@ -2069,7 +2156,18 @@ type IJMInfoEventTypes =
   | "PEER_UPDATED"
   | "ERROR"
   | "DEVICE_UPDATED"
-  | "CONNECTION_STATE";
+  | "CONNECTION_STATE"
+  | "ROOM_UPDATED"
+  | "DOMINANT_SPEAKER"
+  | "NETWORK_QUALITY"
+  | "MEDIA_REQUEST"
+  | "LOWER_HAND"
+  | "REJECT_MEDIA_REQUEST"
+  | "MEETING_END"
+  | "PEER_DISCONNECT_BY_HOST"
+  | "CHAT_MESSAGE"
+  | "HOST_STOP_SHARE"
+  | "WAITING_ROOM";
 ```
 
 #### `IJMRoomUpdateActions`
@@ -2258,5 +2356,83 @@ enum IFacingMode {
   ENVIRONMENT = "environment",
   LEFT = "left",
   RIGHT = "right",
+}
+```
+
+#### `IJMWaitingRoomEvent`
+
+```typescript
+interface IJMWaitingRoomEvent extends IJMBaseEvent {
+  type: "WAITING_ROOM";
+  data: {
+    updateInfo: IWaitingRoomUpdateInfo;
+  };
+}
+```
+
+#### `IWaitingRoomUpdateInfo`
+
+```typescript
+type IWaitingRoomUpdateInfo =
+  | UpdateInfoWREnabled
+  | UpdateInfoWRPeerJoined
+  | UpdateInfoWRPeerLeft
+  | UpdateInfoWRPeerHostAction;
+```
+
+#### `UpdateInfoWREnabled`
+
+```typescript
+interface UpdateInfoWREnabled extends IJMWaitingRoomBaseEvent {
+  action: "ENABLED";
+  value: boolean;
+}
+```
+
+#### `UpdateInfoWRPeerJoined`
+
+```typescript
+interface UpdateInfoWRPeerJoined extends IJMWaitingRoomBaseEvent {
+  action: "PEER_JOINED";
+  value: IJMWaitingRoomPeer;
+}
+```
+
+#### `UpdateInfoWRPeerLeft`
+
+```typescript
+interface UpdateInfoWRPeerLeft extends IJMWaitingRoomBaseEvent {
+  action: "PEER_LEFT";
+  value: IJMWaitingRoomPeer;
+}
+```
+
+#### `UpdateInfoWRPeerHostAction`
+
+```typescript
+interface UpdateInfoWRPeerHostAction extends IJMWaitingRoomBaseEvent {
+  action: "PEER_HOST_ACTION";
+  value: IJMWaitingRoomPeerAction;
+}
+```
+
+#### `IJMWaitingRoomPeer`
+
+```typescript
+interface IJMWaitingRoomPeer {
+  name: string;
+  userId: string;
+  waitingRoomId: string;
+}
+```
+
+#### `IJMWaitingRoomPeerAction`
+
+```typescript
+interface IJMWaitingRoomPeerAction {
+  jiomeetId: string;
+  waitingRoomId: string;
+  acceptedBy: string;
+  accepted: boolean;
 }
 ```
