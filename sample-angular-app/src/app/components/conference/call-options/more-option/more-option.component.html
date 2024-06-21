@@ -1,0 +1,21 @@
+<div  class="options-container" >
+    <div class="options-list-section" *ngIf="!settingSelected">
+        <div class="options-header">
+            <div class="options-title">
+                More Options
+            </div>
+            <div class="options-subtitle">Additional features for the meeting</div>
+        </div>
+        <section class="options-1">
+            <div class="option" (click)="selectSettings(true)">
+                <div>
+                    <img src="assets/images/setting-option.png" alt="" />
+                    <div>Settings</div> 
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <app-inside-call-settings *ngIf="settingSelected" (close)="selectSettings(false)"></app-inside-call-settings>
+    
+</div>

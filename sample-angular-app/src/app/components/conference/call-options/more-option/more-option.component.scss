@@ -1,0 +1,49 @@
+.options-container {
+    padding-top: 10px;
+    color: #ffffff;
+    height: 100%;
+    .options-list-section {
+        .options-header {
+            padding: 0 20px 20px 20px;
+            border-bottom: 1px solid #484848;
+            .options-title {
+                margin-bottom: 1rem;
+                font-size: 16px;
+                display: flex;
+                justify-content: space-between;
+                img {
+                    cursor: pointer;
+                }
+            }
+            .options-subtitle {
+                font-size: 12px;
+                color: #7b7b7b;
+            }
+        }
+        .options-1 {
+            padding: 20px 20px 0 20px;
+           
+            .option {
+                padding: 0 0 20px 0;
+                font-size: 14px;
+                display: flex;
+                justify-content: space-between;
+                cursor: pointer;
+                span {
+                    margin-left: 5px;
+                }
+                div{
+                    display: flex;
+                    align-items: center;
+                };
+                img{
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        }
+        .options-3 {
+            border: none;
+        }
+    }
+}

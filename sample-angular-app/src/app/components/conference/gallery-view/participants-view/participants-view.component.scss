@@ -1,0 +1,31 @@
+.user-name{
+    position: absolute;
+    bottom: 10px;
+    z-index: 1;
+    background-color:#2B2B2B;
+    padding: 0 7px;
+    border-radius: 20px;
+    left: 3%;
+    font-size: 19px;
+    color: white;
+   
+}
+.initials{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    color: #7f7f7f;
+    height: min(15vh,15vw);
+    width: min(15vh,15vw);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    border-radius: 10rem;
+    text-align: center;
+    vertical-align: middle;
+
+    .text-initials{
+        line-height: min(15vh,15vw);
+    font-size: min(7vh,7vw);
+    color: #00000096;
+    }
+}

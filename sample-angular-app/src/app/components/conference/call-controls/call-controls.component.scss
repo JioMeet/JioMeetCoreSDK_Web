@@ -1,0 +1,77 @@
+.controls-container {
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  background-color: #141414;
+  color: white;
+  .network-icon {
+    position: absolute;
+    left: 5%;
+    width: 40px;
+    margin: 10px;
+    height: 40px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    border: 1px solid white;
+    border-radius: 50%;
+  }
+  .other-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+    right: 5%;
+  }
+  .contain-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+    margin: 10px;
+  }
+  .control-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    margin: 0;
+    padding: 4px 10px;
+
+    .icon-control {
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .call-controls {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    flex-wrap: nowrap;
+
+    .share {
+      width: 50px !important;
+    }
+
+    .control-icon-leave {
+      width: 55px;
+      height: 55px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    img {
+    }
+  }
+}

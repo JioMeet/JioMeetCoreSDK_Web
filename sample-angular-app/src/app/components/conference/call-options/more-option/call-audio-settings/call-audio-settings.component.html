@@ -1,0 +1,45 @@
+<div class="audio-settings-container">
+    <div class="audio-header">
+        Audio Settings
+    </div>
+    <section class="mic-section" >
+        <div class="unit d-flex">
+            <span>Microphone</span>
+            <div class="dropdown" (click)="toggleMicDropDown()" (outside)="showMicDropDown = false">
+                {{ selectedMic?.label}} 
+            </div>
+            <div class="dropdown-menu" *ngIf="showMicDropDown">
+                <div class="dropdown-item" *ngFor="let mic of availableAudio?.audioInput" (click)="selectMicrophone(mic)">
+                    {{ mic?.label}}
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="mic-section" >
+        <div class="unit d-flex">
+            <span>Speaker</span>
+        
+            <div class="dropdown" (click)="toggleSpeakerDropDown()" (outside)="showSpeakerDropDown = false">
+                {{ selectedSpeaker?.label }} 
+            </div>
+            <div class="dropdown-menu" *ngIf="showSpeakerDropDown">
+                <div class="dropdown-item" *ngFor="let speaker of availableAudio?.audioOutput" (click)="selectSpeaker(speaker)">
+                    {{ speaker?.label}}
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="mic-section" >
+        <div class="unit d-flex">
+            <span>Camera</span>
+            <div class="dropdown" (click)="toggleCameraDropDown()" (outside)="showCameraDropDown = false">
+                {{ selectedCamera?.label }} 
+            </div>
+            <div class="dropdown-menu" *ngIf="showCameraDropDown">
+                <div class="dropdown-item" *ngFor="let camera of availableAudio?.videoInput" (click)="selectCamera(camera)">
+                    {{ camera?.label}}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

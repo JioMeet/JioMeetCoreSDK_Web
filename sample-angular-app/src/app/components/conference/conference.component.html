@@ -1,0 +1,27 @@
+<div class="conference">
+    <div class="gallery-view" [class.miniView]="optionsController.more" *ngIf="true">
+        <app-gallery-view></app-gallery-view>
+
+    </div>
+    <div class="video-container" *ngIf="false">
+        <div class="localvideotrack" *ngIf="localpeer?.name" class="v-container">
+            <div id="localpeer" class="videos">
+                <div class="user-name">{{localpeer.name}}</div>
+            </div>
+
+        </div>
+        <div *ngFor="let user of participantsInCall; let i=index" class="v-container">
+            <div id={{user.peerId}} class="videos">
+                <div class="user-name">{{user.name}}</div>
+            </div>
+
+        </div>
+    </div>
+    <div class="call-controls"> 
+        <app-call-controls (changeControl)="changeController()"></app-call-controls>
+    </div>
+    <div class="more-call-options" *ngIf="optionsController.more">
+        <app-call-options>
+        </app-call-options>
+    </div>
+</div>
