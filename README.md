@@ -55,14 +55,19 @@ Use the [create meeting api](https://dev.jiomeet.com/docs/JioMeet%20Platform%20S
 ## 🧑‍💻 Quick Start Code
 
 ```typescript
-import { EventManager, JMClient } from "@jiomeet/core-sdk-web";
+import {
+  EventManager,
+  JMClient,
+  IJMInfoEventTypes,
+  IJMRemotePeer,
+} from "@jiomeet/core-sdk-web";
 
 let isAudioMuted = true;
 let isVideoMuted = true;
 const jmClient = new JMClient();
 
 // It is good practice to register event before calling join meeting
-const unsubscribe = EventManager.onEvent((eventInfo) => {
+const unsubscribe = EventManager.onEvent(async (eventInfo) => {
   const { data } = eventInfo;
   switch (eventInfo.type) {
     case IJMInfoEventTypes.PEER_JOINED:
@@ -112,7 +117,7 @@ const unsubscribe = EventManager.onEvent((eventInfo) => {
 // Call the joinMeeting method to start the meeting
 async function joinMeeting() {
   try {
-    const userId = jmClient.joinMeeting({
+    const userId = await jmClient.joinMeeting({
       meetingId: "12345678",
       meetingPin: "abcd2",
       userDisplayName: "John",
@@ -130,7 +135,7 @@ async function joinMeeting() {
 async function toggleMuteAudio() {
   try {
     isAudioMuted = !isAudioMuted;
-    await JMClient.muteLocalAudio(isAudioMuted);
+    await jmClient.muteLocalAudio(isAudioMuted);
     console.log(`Local audio ${isAudioMuted ? "muted" : "unmuted"}`);
   } catch (error) {
     console.error(error);
@@ -141,7 +146,7 @@ async function toggleMuteAudio() {
 async function toggleMuteVideo() {
   try {
     isVideoMuted = !isVideoMuted;
-    await JMClient.muteLocalVideo(isVideoMuted);
+    await jmClient.muteLocalVideo(isVideoMuted);
     console.log(`Local video ${isVideoMuted ? "muted" : "unmuted"}`);
   } catch (error) {
     console.error(error);
@@ -189,7 +194,6 @@ interface IJMClient {
   remotePeers: IJMRemotePeer[];
   localPeer: IJMLocalPeer | undefined;
   roomMediaSetting: IJMMediaSetting;
-  localPeer: IJMLocalPeer | undefined;
   joinMeeting(meetingData: IJMJoinMeetingParams): Promise<string>;
   createPreview(id: string): IJMPreviewManager;
   getPreview(id: string): IJMPreviewManager;
